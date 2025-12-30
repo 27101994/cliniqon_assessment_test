@@ -1,0 +1,35 @@
+# Dependencies
+node_modules/
+frontend/node_modules/
+
+# Environment Variables
+.env
+backend/.env
+
+# Build Artifacts
+frontend/dist/
+frontend/dist-ssr/
+build/
+
+# PHP Specific
+backend/uploads/
+*.log
+
+# OS Files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor Files
+.vscode/
+.idea/
+*.suo
+*.sln
+*.swp
+
+# Testing
+frontend/coverage/
+
+# Local Server Configuration
+.php_history
+*.db
