@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Outlet } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Outlet, Navigate } from 'react-router-dom';
 import Sidebar from './components/Layout/Sidebar';
 import Header from './components/Layout/Header';
 import Dashboard from './pages/Dashboard';
@@ -9,6 +9,24 @@ import Login from './pages/Login'; // Placeholder import
 import Projects from './pages/Projects';
 import Accounting from './pages/Accounting';
 import Profile from './pages/Profile'; // Import Profile
+
+// Protected Route Component
+const ProtectedRoute = ({ children }) => {
+  const token = localStorage.getItem('token');
+  if (!token) {
+    return <Navigate to="/login" replace />;
+  }
+  return children;
+};
+
+// Redirect if already logged in
+const PublicRoute = ({ children }) => {
+  const token = localStorage.getItem('token');
+  if (token) {
+    return <Navigate to="/" replace />;
+  }
+  return children;
+};
 
 // Layout Wrapper
 const Layout = () => {
@@ -29,10 +47,18 @@ const App = () => {
   return (
     <Router>
       <Routes>
-        <Route path="/login" element={<Login />} />
+        <Route path="/login" element={
+          <PublicRoute>
+            <Login />
+          </PublicRoute>
+        } />
 
         {/* Protected Routes */}
-        <Route path="/" element={<Layout />}>
+        <Route path="/" element={
+          <ProtectedRoute>
+            <Layout />
+          </ProtectedRoute>
+        }>
           <Route index element={<Dashboard />} />
           <Route path="projects" element={<Projects />} />
           <Route path="accounting" element={<Accounting />} />

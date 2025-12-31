@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import {
   RiDashboardLine,
   RiUserLine,
@@ -8,10 +8,18 @@ import {
   RiMessage3Line,
   RiFolderLine,
   RiSettings4Line,
-  RiInformationLine
+  RiInformationLine,
+  RiLogoutBoxLine
 } from 'react-icons/ri';
 
 const Sidebar = () => {
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    navigate('/login');
+  };
+
   const navItems = [
     { icon: RiDashboardLine, label: 'Dashboard', path: '/' },
     { icon: RiUserLine, label: 'Profile', path: '/profile' },
@@ -62,6 +70,13 @@ const Sidebar = () => {
         <button className="flex items-center gap-4 px-4 py-3 w-full text-left rounded-xl hover:bg-white/5 hover:text-white transition-colors">
           <RiInformationLine className="text-xl" />
           <span className="font-medium">Info</span>
+        </button>
+        <button
+          onClick={handleLogout}
+          className="flex items-center gap-4 px-4 py-3 w-full text-left rounded-xl hover:bg-red-500/10 text-red-400 hover:text-red-500 transition-all mt-4 border border-transparent hover:border-red-500/20"
+        >
+          <RiLogoutBoxLine className="text-xl" />
+          <span className="font-medium">Logout</span>
         </button>
       </div>
     </aside>

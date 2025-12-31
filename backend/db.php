@@ -32,6 +32,7 @@ class Database {
         try {
             $this->pdo = new PDO($dsn, $user, $pass, $options);
         } catch (\PDOException $e) {
+            http_response_code(500);
             die("Connection failed: " . $e->getMessage());
         }
     }

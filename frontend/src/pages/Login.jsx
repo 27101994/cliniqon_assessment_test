@@ -14,13 +14,16 @@ const Login = () => {
             // NOTE: Using .php extension directly for built-in PHP server compatibility
             const res = await axios.post('http://localhost:8000/api/login.php', { username, password });
 
-            if (res.data.token) {
+            if (res.data && res.data.token) {
                 localStorage.setItem('token', res.data.token);
                 navigate('/');
+            } else {
+                setError(res.data.error || 'Server returned an error');
             }
         } catch (err) {
             console.error(err);
-            setError('Invalid credentials');
+            const msg = err.response?.data?.error || err.response?.data || 'Connect to the backend failed';
+            setError(typeof msg === 'string' ? msg : 'An error occurred during sign in');
         }
     };
 
@@ -50,10 +53,6 @@ const Login = () => {
                         <input
                             type="password"
                             value={password}
-                            onChange={(e) => setUsername(e.target.value)} // Bug: was updating username in previous version, fixed here? No, I copied same bug?
-                            // Wait, I should fix the bug: onChange={(e) => setPassword(e.target.value)}
-                            // previous: onChange={(e) => setPassword(e.target.value)} -> It was correct in previous version.
-                            // Let's make sure I write it correctly.
                             onChange={(e) => setPassword(e.target.value)}
                             className="w-full px-4 py-3 rounded-xl bg-gray-50 border-transparent focus:bg-white focus:ring-2 focus:ring-coral-500/20 focus:border-coral-500 transition-all outline-none"
                             placeholder="••••••••"
