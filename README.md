@@ -17,7 +17,7 @@ A modern, responsive dashboard application built with React, PHP, and MySQL. Thi
    ```bash
    mysql -u root -p cliniqon_machine_test < schema.sql
    ```
-3. Update the `backend/.env` file with your database credentials.
+3. Update the backend/.env file with your database credentials. Please refer to the example.env file or rename example.env to .env inside the backend folder.
 
 ### 2. Backend Server
 Navigate to the root directory and start the PHP built-in server:
